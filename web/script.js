@@ -15,10 +15,14 @@ fetch(uri + '/consultas')
             const card = document.createElement('div');
             card.innerHTML = `
             <h2>Consulta Agendada</h2>
-            <p>Paciente: ${consulta.nome_paciente}</p>
-            <p>Médico: ${consulta.nome_medico}</p>
-            <p>Data: ${new Date(consulta.data_hora).toLocaleDateString('pt-br')}</p>
-            <p>Hora: ${consulta.data_hora.split('T')[1].substring(0, 5)}</p>
+            <p>Paciente: <label contententeditable=true> ${consulta.nome_paciente}</label></p>
+            <p>Médico: <label contententeditable=true> ${consulta.nome_medico}</label></p>
+            <p>Data: <label contententeditable=true> ${new Date(consulta.data_hora).toLocaleDateString('pt-br')}</label></p>
+            <p>Hora: <label contententeditable=true> ${consulta.data_hora.split('T')[1].substring(0, 5)}</label></p>
+            <div>
+            <button onClick="deletar(${consulta.consulta_id})"> - </button>
+            <button onClick="alterar(${consulta.consulta_id})"> * </button>
+            </div>
             `;
             main.appendChild(card);
         });
@@ -44,7 +48,18 @@ form.addEventListener('submit', e => {
                 window.location.reload();
             else
                 alert('Erro ao enviar dados para a API');
-        }).catch(
-            alert('Sem concexão com o Servidor')
-        )
+        })
 })
+
+function deletar(consulta_id) {
+    fetch(uri + `/consultas/${consulta_id}`, {
+        method: 'DELETE'
+    })
+    .then(resp => resp.status)
+    .then(resp => {
+        if(resp == 204)
+            window.location.reload();
+        else
+        alert('erro ao enviar dados para a API');
+    })
+}
