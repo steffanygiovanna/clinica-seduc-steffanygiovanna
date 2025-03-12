@@ -21,7 +21,7 @@ fetch(uri + '/consultas')
             <p>Hora: <label contententeditable=true> ${consulta.data_hora.split('T')[1].substring(0, 5)}</label></p>
             <div>
             <button onClick="deletar(${consulta.consulta_id})"> - </button>
-            <button onClick="alterar(${consulta.consulta_id})"> * </button>
+            <button onClick="alterar()"> * </button>
             </div>
             `;
             main.appendChild(card);
@@ -55,6 +55,7 @@ function deletar(consulta_id) {
     fetch(uri + `/consultas/${consulta_id}`, {
         method: 'DELETE'
     })
+
     .then(resp => resp.status)
     .then(resp => {
         if(resp == 204)
@@ -62,4 +63,9 @@ function deletar(consulta_id) {
         else
         alert('erro ao enviar dados para a API');
     })
+}
+
+function alterar(e){
+    const botao = e.parentNode.e.parentNode.childNodes.lenght
+    alert(div)
 }
